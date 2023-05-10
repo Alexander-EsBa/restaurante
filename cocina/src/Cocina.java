@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Cocina {
                 System.out.println("Se ha conectado un nuevo cliente desde " + cliente.getInetAddress());
 
                 // Manejar la orden recibida del cliente
-                String orden = recibirOrden(cliente);
+                Orden orden = recibirOrden(cliente);
                 System.out.println("Se ha recibido una nueva orden: " + orden);
 
                 // Notificar al salón que la orden ha sido recibida
@@ -32,15 +33,16 @@ public class Cocina {
                 // Cerrar la conexión con el cliente
                 cliente.close();
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error en el servidor: " + e.getMessage());
         }
     }
 
-    private static String recibirOrden(Socket cliente) throws IOException {
-        byte[] buffer = new byte[1024];
-        int numBytes = cliente.getInputStream().read(buffer);
-        return new String(buffer, 0, numBytes);
+    private Orden recibirOrden(Socket cliente) throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(cliente.getInputStream());
+        // Recibir la orden del salón del restaurante
+        Orden orden = (Orden) in.readObject();
+        return orden;
     }
 
     private static void notificarSalon(String mensaje) throws IOException {

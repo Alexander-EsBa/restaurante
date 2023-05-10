@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Orden {
+public class Orden implements Serializable {
     //Atributos
     private boolean lista;
     private int precioTotal;
