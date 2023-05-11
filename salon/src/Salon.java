@@ -49,11 +49,11 @@ public class Salon {
             System.out.println("Conectado al servidor " + servidor.getInetAddress());
             out = new ObjectOutputStream(servidor.getOutputStream());
             // Enviar la orden al servidor de la cocina
-            out.writeObject(mesa.orden);
+            out.writeObject(mesa.getOrden());
             out.flush();
             out.close();
             servidor.close();
-            System.out.println("Orden enviada"+mesa.orden.toString());
+            System.out.println("Orden enviada"+mesa.getOrden().toString());
 
             servidor.close();
         } catch (IOException e) {

@@ -9,10 +9,10 @@ public class Orden implements Serializable {
     private ArrayList<Hamburguesa> hamburguesas;
 
     //Constructor
-    public Orden(){
+    public Orden(int mesa){
         this.lista = false;
         this.precioTotal = 0;
-        this.mesa = 0;
+        this.mesa = mesa;
         this.hamburguesas = new ArrayList<>();
     }
 
@@ -47,17 +47,6 @@ public class Orden implements Serializable {
         Hamburguesa hamburguesaNueva = factory.crearHamburguesa(hamburguesa);
         this.hamburguesas.add(hamburguesaNueva);
         this.precioTotal += hamburguesaNueva.getPrecio();
-    }
-
-    public Hamburguesa getUltimaHamburguesa(){
-        return this.hamburguesas.get(this.hamburguesas.size() - 1);
-    }
-
-    public void modificarHamburguesa(int ingrediente){
-        Hamburguesa hamburguesa = getUltimaHamburguesa();
-        hamburguesa.agregarIngrediente(ingrediente);
-        hamburguesa.setPrecio(0);
-        hamburguesa.definirPrecio();
     }
 
     //toString
