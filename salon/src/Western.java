@@ -1,13 +1,15 @@
-public class Western extends Hamburguesa{
+import java.io.Serializable;
+
+public class Western extends Hamburguesa implements Serializable {
     //Constructor
-    public Western(){
+    public Western() {
         super("Western", 0);
         construir();
         definirPrecio();
     }
 
     //Metodos
-    public void construir(){
+    public void construir() {
         this.agregarIngrediente(1);
         this.agregarIngrediente(2);
         this.agregarIngrediente(9);

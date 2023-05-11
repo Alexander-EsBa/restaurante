@@ -1,11 +1,13 @@
-public class Mesa {
+import java.io.Serializable;
+
+public class Mesa implements Serializable {
     //Atributos
     private int numero;
     private Orden orden;
     private boolean ocupada;
 
     //Constructor
-    public Mesa(int numero){
+    public Mesa(int numero) {
         this.numero = numero;
         this.orden = new Orden(numero);
         this.ocupada = false;
@@ -34,12 +36,6 @@ public class Mesa {
 
     public void setOcupada(boolean ocupada) {
         this.ocupada = ocupada;
-    }
-
-    //Metodos
-    public void inciarOrden(){
-        this.orden = new Orden(this.numero);
-        this.ocupada = true;
     }
 
     //toString

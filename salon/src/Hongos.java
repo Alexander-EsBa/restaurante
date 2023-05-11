@@ -1,6 +1,8 @@
-public class Hongos extends Ingrediente{
+import java.io.Serializable;
+
+public class Hongos extends Ingrediente implements Serializable {
     //Constructor
-    public Hongos(){
+    public Hongos() {
         super("Hongos", 1000);
     }
 }

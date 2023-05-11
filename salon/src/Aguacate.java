@@ -1,6 +1,8 @@
-public class Aguacate extends Ingrediente{
+import java.io.Serializable;
+
+public class Aguacate extends Ingrediente implements Serializable {
     //Constructor
-    public Aguacate(){
+    public Aguacate() {
         super("Aguacate", 1000);
     }
 }

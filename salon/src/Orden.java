@@ -3,26 +3,26 @@ import java.util.ArrayList;
 
 public class Orden implements Serializable {
     //Atributos
-    private boolean lista;
+    private boolean estado;
     private int precioTotal;
     private int mesa;
     private ArrayList<Hamburguesa> hamburguesas;
 
     //Constructor
-    public Orden(int mesa){
-        this.lista = false;
+    public Orden(int mesa) {
+        this.estado = false;
         this.precioTotal = 0;
         this.mesa = mesa;
         this.hamburguesas = new ArrayList<>();
     }
 
     //Getters and Setters
-    public boolean isLista() {
-        return lista;
+    public boolean getEstado() {
+        return estado;
     }
 
-    public void setLista(boolean lista) {
-        this.lista = lista;
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
     public int getPrecioTotal() {
@@ -41,12 +41,18 @@ public class Orden implements Serializable {
         this.hamburguesas = hamburguesas;
     }
 
+    public int getMesa() {
+        return mesa;
+    }
+
+    public void setMesa(int mesa) {
+        this.mesa = mesa;
+    }
+
     //Metodos
-    public void agregarHamburguesa(int hamburguesa){
-        HamburguesasFactory factory = new HamburguesasFactory();
-        Hamburguesa hamburguesaNueva = factory.crearHamburguesa(hamburguesa);
-        this.hamburguesas.add(hamburguesaNueva);
-        this.precioTotal += hamburguesaNueva.getPrecio();
+    public void agregarHamburguesa(Hamburguesa hamburguesa) {
+        this.hamburguesas.add(hamburguesa);
+        this.precioTotal += hamburguesa.getPrecio();
     }
 
     //toString
@@ -58,7 +64,7 @@ public class Orden implements Serializable {
             cadena += hamburguesa + "\n";
         }
         cadena += "Total: ₡" + precioTotal + "\n";
-        cadena += "Lista: " + lista;
+        cadena += "Lista: " + estado;
         return cadena;
     }
 }

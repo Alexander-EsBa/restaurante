@@ -1,13 +1,15 @@
-public class Garden extends Hamburguesa{
+import java.io.Serializable;
+
+public class Garden extends Hamburguesa implements Serializable {
     //Constructor
-    public Garden(){
+    public Garden() {
         super("Garden", 0);
         construir();
         definirPrecio();
     }
 
     //Metodos
-    public void construir(){
+    public void construir() {
         this.agregarIngrediente(1);
         this.agregarIngrediente(2);
         this.agregarIngrediente(10);

@@ -1,10 +1,12 @@
-public class Ingrediente {
+import java.io.Serializable;
+
+public class Ingrediente implements Serializable {
     //Atributos
     private String nombre;
     private int precio;
 
     //Constructor
-    public Ingrediente(String nombre, int precio){
+    public Ingrediente(String nombre, int precio) {
         this.nombre = nombre;
         this.precio = precio;
     }

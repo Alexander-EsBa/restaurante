@@ -1,13 +1,14 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Hamburguesa {
+public class Hamburguesa implements Serializable {
     //Atributos
     private String nombre;
     private int precio;
     private ArrayList<Ingrediente> ingredientes;
 
     //Constructor
-    public Hamburguesa(String nombre, int precio){
+    public Hamburguesa(String nombre, int precio) {
         this.nombre = nombre;
         this.precio = precio;
         this.ingredientes = new ArrayList<>();
@@ -39,12 +40,12 @@ public class Hamburguesa {
     }
 
     //Metodos
-    public void agregarIngrediente(int ingrediente){
+    public void agregarIngrediente(int ingrediente) {
         IngredientesFactory factory = new IngredientesFactory();
         this.ingredientes.add(factory.crearIngrediente(ingrediente));
     }
 
-    public void definirPrecio(){
+    public void definirPrecio() {
         for (Ingrediente ingrediente : ingredientes) {
             this.precio += ingrediente.getPrecio();
         }

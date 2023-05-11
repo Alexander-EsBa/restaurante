@@ -1,6 +1,8 @@
-public class Queso extends Ingrediente{
+import java.io.Serializable;
+
+public class Queso extends Ingrediente implements Serializable {
     //Constructor
-    public Queso(){
+    public Queso() {
         super("Queso", 300);
     }
 }

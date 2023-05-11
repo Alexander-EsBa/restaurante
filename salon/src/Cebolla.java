@@ -1,6 +1,8 @@
-public class Cebolla extends Ingrediente{
+import java.io.Serializable;
+
+public class Cebolla extends Ingrediente implements Serializable {
     //Constructor
-    public Cebolla(){
+    public Cebolla() {
         super("Cebolla", 700);
     }
 }

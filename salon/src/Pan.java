@@ -1,6 +1,8 @@
-public class Pan extends Ingrediente{
+import java.io.Serializable;
+
+public class Pan extends Ingrediente implements Serializable {
     //Constructor
-    public Pan(){
+    public Pan() {
         super("Pan", 700);
     }
 }
