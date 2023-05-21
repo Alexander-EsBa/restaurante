@@ -32,4 +32,8 @@ public class IngredientesFactory {
                 return null;
         }
     }
+
+    public Ingrediente getIngrediente(int i) {
+        return crearIngrediente(i);
+    }
 }
