@@ -59,12 +59,10 @@ public class Orden implements Serializable {
     @Override
     public String toString() {
         String cadena = "";
-        cadena += "MESA: " + mesa + "\n\n";
         for (Hamburguesa hamburguesa : hamburguesas) {
             cadena += hamburguesa + "\n";
         }
-        cadena += "Total: ₡" + precioTotal + "\n";
-        cadena += "Lista: " + estado;
+        cadena += "Orden Lista: " + estado;
         return cadena;
     }
 }
