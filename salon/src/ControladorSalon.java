@@ -21,6 +21,8 @@ public class ControladorSalon extends Thread {
     final int PUERTO_SALIDA = 2222;
     final String IP = "localhost";
 
+    Salon salon;
+
     //Constructor
     public ControladorSalon() {
         start();
@@ -37,6 +39,14 @@ public class ControladorSalon extends Thread {
                 servidor = new ServerSocket(PUERTO_ENTRADA);
                 cliente = servidor.accept();
                 input = new ObjectInputStream(cliente.getInputStream());
+                Object receivedObject = input.readObject();
+                if (receivedObject instanceof Orden) {
+                    enviarOrden((Orden) receivedObject);
+                } else if (receivedObject instanceof Integer) {
+                    System.out.println("Recibido" + receivedObject);
+                    resetMesa((int) receivedObject);
+                }
+
                 input.close();
                 cliente.close();
                 servidor.close();
@@ -56,6 +66,15 @@ public class ControladorSalon extends Thread {
             cliente.close();
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    public void resetMesa(int mesa){
+        for (int i = 0; i < salon.getMesas().size(); i++) {
+            if (salon.getMesas().get(i).getNumero() == mesa){
+                salon.getMesas().get(i).setOcupada(false);
+                salon.getMesas().get(i).getOrden().resetearOrden();
+            }
         }
     }
 

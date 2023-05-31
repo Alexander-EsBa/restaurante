@@ -9,7 +9,7 @@ public class VistaSalon  {
 
     JFrame frame;
 
-    Salon salon;
+
 
     JButton generarButton;
 
@@ -21,6 +21,8 @@ public class VistaSalon  {
     JButton original = new JButton("Original");
 
     JButton personalizada = new JButton("Personalizada");
+
+    ControladorSalon controladorSalon;
     int mesaId;
     JFrame frameMesa;
     JPanel panelOrdenMesa;
@@ -67,16 +69,12 @@ public class VistaSalon  {
     JButton gardenP = new JButton("Garden");
 
     JButton originalP = new JButton("Original");
-
-
-
-
-
-
+    ArrayList<JButton> botonesMesa = new ArrayList<>();
 
 
 
     public VistaSalon() {
+        controladorSalon = new ControladorSalon();
         JLabel label = new JLabel("Ingrese la cantidad de Mesas:");
         frame = new JFrame();
         frame.setTitle("Salon");
@@ -105,12 +103,14 @@ public class VistaSalon  {
     }
     public void generarActionListenerH(JButton b, Hamburguesa h, JButton botonMesa){
         b.setPreferredSize(new Dimension(100, 100));
+        if(b.getActionListeners().length > 0){
+            b.removeActionListener(b.getActionListeners()[0]);
+        }
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                salon.getMesas().get(mesaId).getOrden().agregarHamburguesa(h);
-                salon.getMesas().get(mesaId).setOcupada(true);
-                JOptionPane.showMessageDialog(frameMesa, "Hamburguesa " + h.getNombre() + " agregada a la orden de la mesa " + salon.getMesas().get(mesaId).getNumero());
-                botonMesa.setBackground(Color.RED);
+                controladorSalon.salon.getMesas().get(mesaId).getOrden().agregarHamburguesa(h);
+                controladorSalon.salon.getMesas().get(mesaId).setOcupada(true);
+                JOptionPane.showMessageDialog(frameMesa, "Hamburguesa " + h.getNombre() + " agregada a la orden de la mesa " + controladorSalon.salon.getMesas().get(mesaId).getNumero());
             }
         });
     }
@@ -122,15 +122,11 @@ public class VistaSalon  {
         frame.remove(textField);
         frame.revalidate();
         cantidadMesas = Integer.parseInt(textField.getText());
-        salon = new Salon(cantidadMesas);
+        controladorSalon.salon = new Salon(cantidadMesas);
         for (int i = 1; i <= cantidadMesas; i++) {
 
             JButton botonMesa = new JButton("Mesa " + i);
-            if (salon.getMesas().get(i - 1).isOcupada()) {
-                botonMesa.setBackground(Color.RED);
-            } else {
-                botonMesa.setBackground(Color.GREEN);
-            }
+            botonesMesa.add(botonMesa);
             int finalI = i;
             botonMesa.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -166,11 +162,12 @@ public class VistaSalon  {
     }
 
     public void verOrden(){
-        Orden orden = salon.getMesas().get(mesaId).getOrden();
-        JOptionPane.showMessageDialog(frameMesa, "Orden de la mesa " + salon.getMesas().get(mesaId).getNumero() + "\n" + orden.toString());
+        Orden orden = controladorSalon.salon.getMesas().get(mesaId).getOrden();
+        JOptionPane.showMessageDialog(frameMesa, "Orden de la mesa " + controladorSalon.salon.getMesas().get(mesaId).getNumero() + "\n" + orden.toString() + "\n" + "Ocupada: " + controladorSalon.salon.getMesas().get(mesaId).isOcupada());
     }
     public void generarFrameMesa(int finalI, JButton botonMesa){
         JButton verOrden = new JButton("Ver Orden");
+
         verOrden.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 verOrden();
@@ -185,10 +182,20 @@ public class VistaSalon  {
         frameMesa.setSize(700, 200);
         frameMesa.setLayout(new BorderLayout());
         frameMesa.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JLabel labelMesa = new JLabel("Mesa " + salon.getMesas().get(mesaId).getNumero(), SwingConstants.CENTER);
+        JLabel labelMesa = new JLabel("Mesa " + controladorSalon.salon.getMesas().get(mesaId).getNumero(), SwingConstants.CENTER);
 
         panelBotones.add(verOrden);
+        if(enviarOrden.getActionListeners().length > 0){
+            enviarOrden.removeActionListener(enviarOrden.getActionListeners()[0]);
+        }
+        enviarOrden.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                controladorSalon.enviarOrden(controladorSalon.salon.getMesas().get(mesaId).getOrden());
+            }
+        });
+
         panelBotones.add(enviarOrden);
+
 
         frameMesa.add(labelMesa, BorderLayout.NORTH);
         botonesHamburguesa(botonMesa);
@@ -272,8 +279,8 @@ public class VistaSalon  {
                     return;
                 }
                 originalH.definirPrecio();
-                salon.getMesas().get(mesaId).getOrden().agregarHamburguesa(originalH);
-                JOptionPane.showMessageDialog(frameOriginal, "Hamburguesa " + originalH.getNombre() + " agregada a la orden de la mesa " + salon.getMesas().get(mesaId).getNumero());
+                controladorSalon.salon.getMesas().get(mesaId).getOrden().agregarHamburguesa(originalH);
+                JOptionPane.showMessageDialog(frameOriginal, "Hamburguesa " + originalH.getNombre() + " agregada a la orden de la mesa " + controladorSalon.salon.getMesas().get(mesaId).getNumero());
                 frameOriginal.dispose();
             }
         });

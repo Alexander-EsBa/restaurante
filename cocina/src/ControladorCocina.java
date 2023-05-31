@@ -1,4 +1,6 @@
+import javax.swing.*;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -15,7 +17,12 @@ public class ControladorCocina extends Thread {
     Socket cliente;
     ServerSocket servidor;
     ObjectInputStream input;
+    ObjectOutputStream output;
     final int PUERTO = 2222;
+
+    int PUERTO_SALIDA = 1111;
+
+    JFrame frame = new JFrame();
 
     //Atributos Ordenes
     ArrayList<Orden> ordenes = new ArrayList<>();
@@ -37,6 +44,7 @@ public class ControladorCocina extends Thread {
                 cliente = servidor.accept();
                 input = new ObjectInputStream(cliente.getInputStream());
                 ordenes.add((Orden) input.readObject());
+                System.out.println(ordenes);
                 input.close();
                 cliente.close();
                 servidor.close();
@@ -45,6 +53,20 @@ public class ControladorCocina extends Thread {
             System.out.println(e);
         }
     }
+    public void enviarOrden(int orden){
+        try {
+            cliente = new Socket("localhost", PUERTO_SALIDA);
+            output = new ObjectOutputStream(cliente.getOutputStream());
+            output.writeObject(orden);
+            output.flush();
+            output.close();
+            cliente.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+
 
 
 

@@ -8,6 +8,8 @@ public class Orden implements Serializable {
     private int mesa;
     private ArrayList<Hamburguesa> hamburguesas;
 
+    public boolean estaAgregado = false;
+
     //Constructor
     public Orden(int mesa) {
         this.estado = false;
@@ -63,6 +65,13 @@ public class Orden implements Serializable {
             cadena += hamburguesa + "\n";
         }
         cadena += "Orden Lista: " + estado;
+        cadena += "\nPrecio Total: " + precioTotal;
         return cadena;
+    }
+
+    public void resetearOrden(){
+        this.estado = false;
+        this.precioTotal = 0;
+        this.hamburguesas = new ArrayList<>();
     }
 }
