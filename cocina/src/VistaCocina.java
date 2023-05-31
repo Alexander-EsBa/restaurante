@@ -64,11 +64,10 @@ public class VistaCocina {
         frameOrden = new JFrame();
         panelBotones = new JPanel();
         frameOrden.setTitle("Mesa " + orden.getMesa());
-        frameOrden.setSize(700, 200);
+        frameOrden.setSize(500, 700);
         frameOrden.setLayout(new BorderLayout());
         frameOrden.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        JLabel labelMesa = new JLabel("Mesa " + orden.getMesa());
-        JLabel labelOrden = new JLabel(orden.toString());
+        JTextArea textArea = new JTextArea("Mesa " + orden.getMesa()+"\n"+orden.toString()+"\n");
         if(ordenLista.getActionListeners().length > 0){
             ordenLista.removeActionListener(ordenLista.getActionListeners()[0]);
         }
@@ -78,9 +77,8 @@ public class VistaCocina {
             controlador.enviarOrden(orden.getMesa());
         });
         panelBotones.add(ordenLista);
-        frameOrden.add(labelMesa, BorderLayout.NORTH);
-        frameOrden.add(labelOrden, BorderLayout.WEST);
-        frameOrden.add(panelBotones, BorderLayout.CENTER);
+        frameOrden.add(textArea, BorderLayout.NORTH);
+        frameOrden.add(panelBotones, BorderLayout.SOUTH);
         frameOrden.setVisible(true);
     }
 
