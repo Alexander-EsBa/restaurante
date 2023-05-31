@@ -230,6 +230,9 @@ public class VistaSalon  {
 
     public void generarActionListenerP(JButton b, Hamburguesa h){
         b.setPreferredSize(new Dimension(100, 100));
+        if(b.getActionListeners().length > 0){
+            b.removeActionListener(b.getActionListeners()[0]);
+        }
         b.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 generarFrameAgregar(h);
@@ -272,6 +275,9 @@ public class VistaSalon  {
         JButton agregar = new JButton("Agregar");
         agregar.setPreferredSize(new Dimension(100, 100));
         agregar.setBackground(Color.GREEN);
+        if(agregar.getActionListeners().length > 0){
+            agregar.removeActionListener(agregar.getActionListeners()[0]);
+        }
         agregar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (originalH.getIngredientes().size() == 0) {
@@ -280,6 +286,7 @@ public class VistaSalon  {
                 }
                 originalH.definirPrecio();
                 controladorSalon.salon.getMesas().get(mesaId).getOrden().agregarHamburguesa(originalH);
+                controladorSalon.salon.getMesas().get(mesaId).setOcupada(true);
                 JOptionPane.showMessageDialog(frameOriginal, "Hamburguesa " + originalH.getNombre() + " agregada a la orden de la mesa " + controladorSalon.salon.getMesas().get(mesaId).getNumero());
                 frameOriginal.dispose();
             }

@@ -75,6 +75,7 @@ public class VistaCocina {
             actualizarOrdenes(orden.getMesa());
             controlador.ordenes.remove(orden);
             controlador.enviarOrden(orden.getMesa());
+            frameOrden.dispose();
         });
         panelBotones.add(ordenLista);
         frameOrden.add(textArea, BorderLayout.NORTH);
