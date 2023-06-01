@@ -78,6 +78,24 @@ public class ControladorSalon extends Thread {
         }
     }
 
+    public void agregarPersonalizada(Hamburguesa originalH, int mesaId){
+        originalH.definirPrecio();
+        salon.getMesas().get(mesaId).getOrden().agregarHamburguesa(originalH);
+        salon.getMesas().get(mesaId).setOcupada(true);
+    }
+
+    public void agregarHamburguesa(Hamburguesa h, int mesaId){
+        salon.getMesas().get(mesaId).getOrden().agregarHamburguesa(h);
+        salon.getMesas().get(mesaId).setOcupada(true);
+    }
+
+    public Orden getOrden(int mesaId){
+        return salon.getMesas().get(mesaId).getOrden();
+    }
+
+    public Mesa getMesa(int mesaId){
+        return salon.getMesas().get(mesaId);
+    }
 
 
 
