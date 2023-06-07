@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ControladorSalon extends Thread {
     //Atributos
@@ -39,14 +40,26 @@ public class ControladorSalon extends Thread {
                 servidor = new ServerSocket(PUERTO_ENTRADA);
                 cliente = servidor.accept();
                 input = new ObjectInputStream(cliente.getInputStream());
+                /*ArrayList<Orden> ordenes = (ArrayList<Orden>) input.readObject();
+                for (int i = 0; i < ordenes.size(); i++) {
+                    salon.getMesas().get(i).setOcupada(true);
+                    salon.getMesas().get(i).setOrden(ordenes.get(i));
+                }*/
+                /*for (Orden orden : ordenes) {
+                    System.out.println("Mesa: " + orden.getMesa() + " Cantidad: " + orden.getHamburguesas().size() + " Precio: " + orden.getPrecioTotal());
+                }*/
                 Object receivedObject = input.readObject();
                 if (receivedObject instanceof Orden) {
                     enviarOrden((Orden) receivedObject);
                 } else if (receivedObject instanceof Integer) {
                     System.out.println("Recibido" + receivedObject);
                     resetMesa((int) receivedObject);
+                } else if (receivedObject instanceof ArrayList<?>){
+                    for (int i = 0; i < ((ArrayList<Orden>) receivedObject).size(); i++) {
+                        salon.getMesas().get(i).setOcupada(true);
+                        salon.getMesas().get(i).setOrden(((ArrayList<Orden>) receivedObject).get(i));
+                    }
                 }
-
                 input.close();
                 cliente.close();
                 servidor.close();
