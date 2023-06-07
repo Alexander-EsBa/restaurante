@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import javax.swing.*;
 
 public class ControladorSalon extends Thread {
     //Atributos
@@ -54,6 +55,7 @@ public class ControladorSalon extends Thread {
                 } else if (receivedObject instanceof Integer) {
                     System.out.println("Recibido" + receivedObject);
                     resetMesa((int) receivedObject);
+                    JOptionPane.showMessageDialog(null, "Orden de la mesa: "+receivedObject+" entregada");
                 } else if (receivedObject instanceof ArrayList<?>){
                     for (int i = 0; i < ((ArrayList<Orden>) receivedObject).size(); i++) {
                         salon.getMesas().get(i).setOcupada(true);
