@@ -55,7 +55,7 @@ public class ControladorSalon extends Thread {
                 } else if (receivedObject instanceof Integer) {
                     System.out.println("Recibido" + receivedObject);
                     resetMesa((int) receivedObject);
-                    JOptionPane.showMessageDialog(null, "Orden de la mesa: "+receivedObject+" entregada");
+                    JOptionPane.showMessageDialog(null, "Orden de la mesa "+receivedObject+" lista");
                 } else if (receivedObject instanceof ArrayList<?>){
                     for (int i = 0; i < ((ArrayList<Orden>) receivedObject).size(); i++) {
                         salon.getMesas().get(i).setOcupada(true);
